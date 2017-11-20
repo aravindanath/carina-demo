@@ -25,34 +25,36 @@ import com.qaprosoft.carina.core.gui.AbstractPage;
 
 public class LoginPage extends AbstractPage
 {
-	@FindBy(name = "email")
+	@FindByAI(label=Label.TEXT_FIELD, caption="Email or Phone Number")
+	@FindBy(name="email")
 	private ExtendedWebElement emailTextField;
 
-	@FindBy(name = "password")
+	@FindByAI(label=Label.TEXT_FIELD, caption="Password")
+	@FindBy(name="pass")
 	private ExtendedWebElement passwordTextField;
 
-	@FindBy(xpath = "//input[@value='Log in']")
-	private ExtendedWebElement signInButton;
-
-	@FindByAI(caption = "Google", label = Label.BUTTON)
-	private ExtendedWebElement googleButton;
-
+	@FindByAI(label=Label.BUTTON, caption="Log In")
+//	@FindBy(name="login")
+	private ExtendedWebElement loginButton;
+	
+	@FindBy(xpath="//div[contains(., 'The email or phone number you’ve entered doesn’t match any account.')]")
+	private ExtendedWebElement validationErrorLabel;
+	
 	public LoginPage(WebDriver driver)
 	{
 		super(driver);
-		setPageAbsoluteURL("https://stackoverflow.com/users/login");
+		setPageAbsoluteURL("https://www.facebook.com/login");
 	}
 
 	public void signIn(String email, String password)
 	{
 		emailTextField.type(email);
 		passwordTextField.type(password);
-		signInButton.click();
+		loginButton.click();
 	}
-
-	// AI usage
-	public void signInViaGoogle()
+	
+	public boolean isValidationErrorPresent()
 	{
-		googleButton.click();
+		return validationErrorLabel.isElementPresent();
 	}
 }

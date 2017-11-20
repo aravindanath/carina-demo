@@ -15,12 +15,15 @@
  */
 package com.qaprosoft.carina.demo;
 
-import org.testng.Assert;
+import org.openqa.selenium.Cookie;
 import org.testng.annotations.Test;
 
 import com.qaprosoft.carina.core.foundation.AbstractTest;
+import com.qaprosoft.carina.core.foundation.utils.StringGenerator;
 import com.qaprosoft.carina.core.foundation.utils.ownership.MethodOwner;
-import com.qaprosoft.carina.demo.gui.pages.LoginPage;
+import com.qaprosoft.carina.demo.gui.pages.lc.Apply4LoanPage;
+import com.qaprosoft.carina.demo.gui.pages.lc.CheckRatePage;
+import com.qaprosoft.carina.demo.gui.pages.lc.SQAATPage;
 
 /**
  * This sample shows how to use Alice AI to find UI elements.
@@ -28,14 +31,36 @@ import com.qaprosoft.carina.demo.gui.pages.LoginPage;
  * @author akhursevich
  */
 public class AISampleTest extends AbstractTest
-{
-	@Test(description = "JIRA#AUTO-0010")
+{	
+	@Test(description = "JIRA#AUTO-0011")
 	@MethodOwner(owner = "akhursevich")
-	public void testGoogleLoginWithAI()
+	public void testApply4LoanNew()
 	{
-		LoginPage homePage = new LoginPage(getDriver());
-		homePage.open();
-		homePage.signInViaGoogle();
-		Assert.assertTrue(getDriver().getCurrentUrl().startsWith("https://accounts.google.com/signin"), "Google login not opened");
+		Apply4LoanPage apply4LoanPage = new Apply4LoanPage(getDriver());
+		apply4LoanPage.open();
+		getDriver().manage().addCookie(new Cookie("xp", "PL_PI1_QAAT_v4.C"));
+		
+		SQAATPage sqaat = apply4LoanPage.checkYourRate(10000, "Business", "Good (660-720)");
+		sqaat.clickTwoOfUs();
+		sqaat.fillFirstLastName("John", "Doe");
+		sqaat.fillAddress("Test", "New York", "NY", "99000");
+	}
+	
+	@Test(description = "JIRA#AUTO-0012")
+	@MethodOwner(owner = "akhursevich")
+	public void testApply4LoanOld()
+	{
+		Apply4LoanPage apply4LoanPage = new Apply4LoanPage(getDriver());
+		apply4LoanPage.open();
+		getDriver().manage().addCookie(new Cookie("xp", "PL_PI1_QAAT_v4.Console"));
+		apply4LoanPage.checkYourRate(10000, "Business", "Good (660-720)");
+		
+		CheckRatePage checkRatePage = new CheckRatePage(getDriver());
+		checkRatePage.fillFirstLastName("John", "Doe");
+		checkRatePage.fillAddress("Green", "San Francisco", "California", "94015");
+		checkRatePage.fillBirthDate(12, 3, 1982);
+		checkRatePage.fillCredentials(StringGenerator.generateEmail(), StringGenerator.generateNumeric(8) + "Az!");
+		checkRatePage.fillIncome(300000, 50000);
+		checkRatePage.submit();
 	}
 }
