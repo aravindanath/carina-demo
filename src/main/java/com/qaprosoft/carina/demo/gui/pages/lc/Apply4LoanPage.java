@@ -3,8 +3,6 @@ package com.qaprosoft.carina.demo.gui.pages.lc;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
-import com.qaprosoft.carina.core.foundation.webdriver.ai.FindByAI;
-import com.qaprosoft.carina.core.foundation.webdriver.ai.Label;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.gui.AbstractPage;
 
@@ -19,7 +17,7 @@ public class Apply4LoanPage  extends AbstractPage
 	@FindBy(id="creditScore")
 	private ExtendedWebElement creditScopeSelect;
 	
-	@FindByAI(label=Label.BUTTON, caption="Check Your Rate")
+	@FindBy(id="master_getPersonalInfo")
 	private ExtendedWebElement checkRateButton;
 
 	public Apply4LoanPage(WebDriver driver)

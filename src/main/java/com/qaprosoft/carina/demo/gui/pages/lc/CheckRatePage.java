@@ -10,31 +10,31 @@ import com.qaprosoft.carina.core.gui.AbstractPage;
 
 public class CheckRatePage  extends AbstractPage
 {
-	@FindBy(name="firstName")
+	@FindByAI(label=Label.TEXT_FIELD, caption="First Name")
 	private ExtendedWebElement firstNameTextField;
 	
 	@FindByAI(label=Label.TEXT_FIELD, caption="Last Name")
 	private ExtendedWebElement lastNameTextField;
 	
-	@FindByAI(label=Label.TEXT_FIELD, caption="Street Address")
+	@FindBy(name="streetAddress")
 	private ExtendedWebElement streetAddressTextField;
 	
 	@FindBy(name="city")
 	private ExtendedWebElement cityTextField;
 	
-	@FindBy(name="state")
+	@FindByAI(label=Label.SELECT, caption="State")
 	private ExtendedWebElement stateSelect;
 	
-	@FindBy(name="zip")
+	@FindByAI(label=Label.TEXT_FIELD, caption="Zip Code")
 	private ExtendedWebElement zipTextField;
 	
-	@FindBy(id="monthBirth")
+	@FindByAI(label=Label.TEXT_FIELD, caption="Date of Birth")
 	private ExtendedWebElement monthTextField;
 	
-	@FindBy(id="dayBirth")
+	@FindByAI(label=Label.TEXT_FIELD, caption="DD")
 	private ExtendedWebElement dayTextField;
 	
-	@FindBy(id="yearBirth")
+	@FindByAI(label=Label.TEXT_FIELD, caption="YYYY")
 	private ExtendedWebElement yearTextField;
 	
 	@FindBy(name="email")
@@ -43,16 +43,16 @@ public class CheckRatePage  extends AbstractPage
 	@FindBy(name="password")
 	private ExtendedWebElement passwordTextField;
 	
-	@FindBy(name="income")
+	@FindByAI(label=Label.TEXT_FIELD, caption="Yearly Individual Income")
 	private ExtendedWebElement incomeTextField;
 	
-	@FindBy(name="incomeAdditional")
+	@FindByAI(label=Label.TEXT_FIELD, caption="(Optional)")
 	private ExtendedWebElement incomeAdditionalTextField;
 	
-	@FindBy(name="agreements")
+	@FindByAI(label=Label.CHECKBOX, caption="")
 	private ExtendedWebElement agreementCheckbox;
 	
-	@FindBy(name="submitButton")
+	@FindBy(name="submit-button")
 	private ExtendedWebElement submitButton;
 	
 	public CheckRatePage(WebDriver driver)
@@ -62,13 +62,14 @@ public class CheckRatePage  extends AbstractPage
 	
 	public void fillFirstLastName(String firstName, String lastName)
 	{
-		lastNameTextField.getElement().sendKeys(lastName);
+		streetAddressTextField.type(" ");
 		firstNameTextField.type(firstName);
+		lastNameTextField.type(lastName);
 	}
 	
 	public void fillAddress(String address, String city, String state, String zip)
 	{
-		streetAddressTextField.getElement().sendKeys(address);
+		streetAddressTextField.type(address);
 		cityTextField.type(city);
 		stateSelect.select(state);
 		zipTextField.type(zip);
